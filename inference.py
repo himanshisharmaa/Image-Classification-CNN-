@@ -4,7 +4,7 @@ from tensorflow import keras
 from keras.models import load_model
 import argparse
 import numpy as np
-
+import uuid
 ap=argparse.ArgumentParser()
 ap.add_argument("-mp","--model_path",required=True,help="Path to model")
 ap.add_argument("-i","--image",type=str,required=True,help="Path to the input image")
@@ -33,9 +33,9 @@ prediction_Class=prediction_img.argmax(axis=1)[0]
 predicted_label=labelNames[prediction_Class]
 print(f"the predicted class is:{predicted_label}")
 
-output_img=cv2.imread("dog.jpeg")
+output_img=cv2.imread(args["image"])
 cv2.putText(output_img,predicted_label,(10,30),cv2.FONT_HERSHEY_SIMPLEX,0.8,(0,255,0),2)
 cv2.imshow("Prediction",output_img)
-cv2.imwrite("Output_img.jpg",output_img)
+cv2.imwrite(f"Outputs/Output_img_{uuid.uuid4()}.jpg",output_img)
 cv2.waitKey()
 cv2.destroyAllWindows()
